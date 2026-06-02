@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INVASION</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#08111f;
+color:white;
+}
+
+header{
+position:sticky;
+top:0;
+z-index:100;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 50px;
+background:rgba(10,20,40,.95);
+border-bottom:2px solid #3aa8ff;
+}
+
+.logo img{
+height:80px;
+}
+
+.menu{
+display:flex;
+gap:15px;
+}
+
+.menu a{
+text-decoration:none;
+color:white;
+padding:10px 18px;
+border:1px solid #3aa8ff;
+border-radius:12px;
+transition:.3s;
+}
+
+.menu a:hover{
+background:#3aa8ff;
+}
+
+.hero{
+text-align:center;
+padding:100px 20px;
+}
+
+.hero h1{
+font-size:70px;
+color:#ffd700;
+text-shadow:0 0 20px #ffd700;
+}
+
+.hero p{
+margin-top:20px;
+font-size:22px;
+color:#cfcfcf;
+}
+
+.discord-btn{
+display:inline-block;
+margin-top:30px;
+padding:15px 35px;
+background:#5865F2;
+border-radius:12px;
+color:white;
+text-decoration:none;
+font-size:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:50px;
+}
+
+.card{
+background:#0f1b2e;
+border:2px solid #3aa8ff;
+border-radius:20px;
+padding:25px;
+text-align:center;
+box-shadow:0 0 20px rgba(58,168,255,.2);
+}
+
+.card h2{
+color:#ffd700;
+margin-bottom:10px;
+}
+
+.section{
+padding:50px;
+}
+
+.section h2{
+text-align:center;
+font-size:40px;
+margin-bottom:30px;
+color:#ffd700;
+}
+
+.members{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.member{
+background:#0f1b2e;
+border:2px solid #3aa8ff;
+border-radius:20px;
+padding:20px;
+text-align:center;
+}
+
+.member img{
+width:90px;
+height:90px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+footer{
+padding:30px;
+text-align:center;
+border-top:2px solid #3aa8ff;
+margin-top:50px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">
+<img src="https://i.imgur.com/5vD6GdY.png">
+</div>
+
+<nav class="menu">
+<a href="#">Головна</a>
+<a href="#members">Учасники</a>
+<a href="#about">Про клан</a>
+<a href="https://discord.gg/JUWvMawdRj">Discord</a>
+</nav>
+</header>
+
+<section class="hero">
+<h1>INVASION</h1>
+<p>Офіційний сайт клану</p>
+
+<a class="discord-btn"
+href="https://discord.gg/JUWvMawdRj">
+Увійти через Discord
+</a>
+</section>
+
+<section class="stats">
+
+<div class="card">
+<h2>Учасників</h2>
+<h1 id="membersCount">0</h1>
+</div>
+
+<div class="card">
+<h2>Ролей</h2>
+<h1>Авто</h1>
+</div>
+
+<div class="card">
+<h2>Статус</h2>
+<h1>ONLINE</h1>
+</div>
+
+</section>
+
+<section class="section" id="members">
+
+<h2>Учасники клану</h2>
+
+<div class="members" id="membersContainer">
+
+</div>
+
+</section>
+
+<section class="section" id="about">
+
+<h2>Про клан</h2>
+
+<div class="card">
+<p>
+INVASION — український ігровий клан.
+Усі учасники автоматично синхронізуються через Discord.
+</p>
+</div>
+
+</section>
+
+<footer>
+© INVASION Clan
+</footer>
+
+<script>
+
+fetch('/members')
+.then(res => res.json())
+.then(data => {
+
+document.getElementById('membersCount').innerText = data.length;
+
+const container =
+document.getElementById('membersContainer');
+
+data.forEach(member => {
+
+container.innerHTML += `
+<div class="member">
+
+<img src="${member.avatar}">
+
+<h3>${member.name}</h3>
+
+<p>
+${member.roles.join(", ")}
+</p>
+
+</div>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
