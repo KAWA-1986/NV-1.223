@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Monitor</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#0a0a0a;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    background:#111;
+    padding:15px;
+    border-bottom:2px solid #00aaff;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#3aa7ff;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#151515;
+    border:1px solid #333;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.avatar{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+}
+
+.name{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.status{
+    margin-top:5px;
+}
+
+.activity{
+    color:#00aaff;
+    margin-top:5px;
+}
+
+.online{
+    color:#00ff66;
+}
+
+.idle{
+    color:#ffd800;
+}
+
+.dnd{
+    color:#ff4444;
+}
+
+.offline{
+    color:#999;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">ACTIVITY MONITOR</div>
+</header>
+
+<div class="container">
+
+    <h2>Активність Discord</h2>
+
+    <div id="activityList"></div>
+
+</div>
+
+<script>
+
+async function loadActivity(){
+
+    const response = await fetch("/activity");
+    const data = await response.json();
+
+    const list = document.getElementById("activityList");
+
+    list.innerHTML = "";
+
+    data.forEach(user => {
+
+        let statusClass = user.status;
+
+        list.innerHTML += `
+        <div class="card">
+
+            <img class="avatar" src="${user.avatar}">
+
+            <div>
+
+                <div class="name">
+                    ${user.name}
+                </div>
+
+                <div class="status ${statusClass}">
+                    Статус: ${user.status}
+                </div>
+
+                <div class="activity">
+                    🎮 ${user.activity}
+                </div>
+
+            </div>
+
+        </div>
+        `;
+
+    });
+
+}
+
+loadActivity();
+
+setInterval(loadActivity,10000);
+
+</script>
+
+</body>
+</html>
