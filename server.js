@@ -48,8 +48,6 @@ app.get("/activity", async (req, res) => {
     return res.json([]);
   }
 
-  await guild.members.fetch();
-
   const data = guild.members.cache.map(member => {
 
     const presence = member.presence;
